@@ -31,4 +31,14 @@ int main()
 
     std::cout << "USERS:" << obj.getCount() << std::endl;
     std::cout << "USERS:" << newobj.getCount() << std::endl;
+
+    std::cout << "OBJ VALUE:" << *obj << std::endl;
+    std::cout << "NEWOBJ VALUE:" << *newobj << std::endl;
+
+    int newValue = 10;
+    *obj = newValue;
+    std::cout << "SET VALUE TO " << newValue << std::endl;
+
+    std::cout << "OBJ VALUE:" << *obj << std::endl;
+    std::cout << "NEWOBJ VALUE:" << *newobj << std::endl;
 }

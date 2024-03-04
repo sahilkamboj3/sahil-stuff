@@ -46,6 +46,11 @@ public:
         return *this;
     }
 
+    T& operator*() const
+    {
+        return *ptr_;
+    }
+
     void copy(MySharedPtr<T>& other)
     {
         ptr_ = other.ptr_;
