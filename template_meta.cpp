@@ -89,9 +89,35 @@ struct my_contains :
     >::value
 {};
 
+void printN() {}
+
+template<typename T>
+void printN(T t)
+{
+    std::cout << t << "\n";
+}
+
+template<typename T, typename... Extras>
+void printN(T t, Extras... extras)
+{
+    std::cout << t << ", ";
+    printN(extras...);
+}
+
+template<typename Tuple, size_t... Idxs>
+void printTuple(Tuple tuple, std::index_sequence<Idxs...>) {
+    printN(std::get<Idxs>(tuple)...);
+}
+
+template<typename Tuple>
+void printTuple(Tuple tuple)
+{
+    printTuple(tuple, std::make_index_sequence<std::tuple_size_v<Tuple>>{});
+}
+
 int main()
 {
-    // Ep.1
+    // Ep.1 - Intro
     Foo<char, char> foo;
     std::cout << std::boolalpha;
     std::cout << decltype(foo)::type << std::endl;
@@ -106,11 +132,16 @@ int main()
     print(x_p);
 
  
-    // Ep. 2
+    // Ep. 2 - writing MetaFunctions
     std::tuple<int, bool, float> tup(5, true, 1.0f);
     std::vector<std::string> strings{"int", "bool", "float"};
     std::cout << myContains("int", strings) << std::endl;
     std::cout << myContains("double", strings) << std::endl;
     std::cout << my_contains<int, decltype(tup)>::value << std::endl;
     std::cout << my_contains<double, decltype(tup)>::value << std::endl;
+
+    // Ep. 3 - Variadic templates
+    std::cout << "PRINTN:" << "\n";
+    printN(1, "hi", 1.5f);
+    auto tup2 = std::make_tuple<int, bool, double>(5, false, 1.4);
 }
